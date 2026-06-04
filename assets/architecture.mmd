@@ -1,0 +1,33 @@
+flowchart TD
+    phone["📱 Phone (Telegram)"]
+    lp["Telegram long-poll"]
+    daemon["Daemon (single tick loop)"]
+    disp["Dispatcher (classify + allowlist)"]
+    brain["Persistent brain session<br/>(claude -p --resume, self-heal)"]
+    build["Detached build runner<br/>(single writer)"]
+    result["Result file"]
+    sched["Scheduler tick — due()"]
+    routines["Due routines fire"]
+    wd["Watchdog"]
+    hb["Heartbeat timestamp"]
+
+    phone -->|message / voice note| lp
+    lp --> daemon
+    daemon --> disp
+
+    disp -->|chat turn| brain
+    brain -->|answer| daemon
+
+    disp -->|/build| build
+    build -->|writes once| result
+    result -->|daemon polls + reads| daemon
+
+    daemon -->|reply| phone
+
+    daemon --> sched
+    sched -->|due == true| routines
+    routines -->|push| phone
+
+    daemon -->|every tick| hb
+    wd -->|reads on interval| hb
+    wd -->|stale → restart / alert| phone

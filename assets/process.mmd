@@ -1,0 +1,32 @@
+flowchart TD
+    spec["1 - Spec<br/>locked decisions, scope, scrub boundary"]
+    plan["2 - Plan<br/>milestones M1-M6, task breakdown"]
+    build["3 - Subagent-driven build<br/>writes stay single-threaded"]
+    fanout["Read-heavy work fans out<br/>(parallel read-only subagents)"]
+    qc["4 - Independent adversarial QC<br/>separate refute-first reviewer"]
+    fix["Fix findings<br/>(builder addresses QC)"]
+    sec["5 - Security review<br/>+ adversarial leak-check"]
+    tests["6 - Deterministic gate<br/>101 tests green"]
+    ship["7 - Ship<br/>reversible production cutover"]
+
+    jeff(["👤 I direct + gate every step<br/>(Fleet Mode)"])
+
+    spec --> plan --> build
+    fanout -.read-only.-> build
+    build --> qc
+    qc -->|findings| fix
+    fix --> qc
+    qc -->|clean| sec
+    sec --> tests
+    tests -->|all pass| ship
+    tests -.->|any fail| fix
+
+    jeff -. gate .-> spec
+    jeff -. gate .-> qc
+    jeff -. human-gate irreversible .-> ship
+
+    receipt["Receipt at every gate"]
+    qc -.-> receipt
+    sec -.-> receipt
+    tests -.-> receipt
+    ship -.-> receipt

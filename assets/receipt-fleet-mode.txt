@@ -1,0 +1,24 @@
+$ bow build <repo> "<task>"      # dispatched headless via `claude -p`, Fleet Mode auto-applied
+
+  FLEET MODE RECEIPT
+  ------------------------------------------------------------------
+  stakes        : LOW (trivial, single-file change)
+  fan-out       : NO   default-to-single; task did not earn parallel agents
+                       (in my own runs, adding agents averages a net loss)
+
+  PRODUCER      : 1 agent, single-threaded writes
+                  - wrote the change
+                  - ran it; captured real output
+
+  INDEPENDENT QC: separate refute-first reviewer (did NOT write the code)
+                  - re-derived intent from the spec, not the diff
+                  - tried to break it before trusting it
+                  - verdict: 0 bugs
+
+  gate          : deterministic checks PASS -> independent review PASS
+  status        : DONE
+  cost          : $0.33 end-to-end, ~$0 over the flat-rate plan
+  ------------------------------------------------------------------
+
+  Architected, directed, and gated by <you>. Producer and QC are
+  separate agents on purpose: the writer never grades its own work.

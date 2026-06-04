@@ -1,0 +1,31 @@
+$ bow qc --adversarial      # independent fleet, refute-first; the writers do not grade themselves
+
+  ADVERSARIAL QC PASS
+  ------------------------------------------------------------------
+  agents        : 37, fanned out across 6 dimensions
+                  correctness | concurrency | reliability
+                  resource-leaks | safety | edge-cases
+  funnel        : 30 raw findings -> each adversarially verified
+                  -> 13 confirmed -> 7 deduped
+                     (1 high, 6 medium, 0 critical)
+
+  *** HEADLINE CATCH (high) ***
+  A malformed field on one scheduled routine could SOFT-LOCK the
+  whole daemon. Routine dispatch runs before the poll for new
+  inbound messages -- so one bad routine that raised also froze
+  the entire message loop. Silent. Unit tests missed it.
+
+  FIX  : isolate every routine in its own try/except; the due()
+         predicate now reads fields defensively. One bad job can
+         no longer take down the others.
+  +    : guarded download paths, central >4096-char chunking,
+         best-effort sends (a channel outage can't abort a poll),
+         non-dict-JSON guards on all three stores.
+  tests: +14 regression tests (72 -> 86); live job verified unaffected.
+         (cron-for-anything later added +15 more: 86 -> 101 total.)
+
+  verdict       : real bugs a single agent and the unit suite missed.
+                  The multi-agent QC earned its cost here.
+  ------------------------------------------------------------------
+
+  Architected, directed, and gated by <you>.

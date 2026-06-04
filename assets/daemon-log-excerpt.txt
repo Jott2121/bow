@@ -1,0 +1,20 @@
+# Redacted excerpt from the live daemon's stderr log (launchd-captured).
+# RAW machine output, only redactions applied: chat ids, the notify-channel
+# name, the username (-> <you>), and the real working path (-> <state>) are
+# masked. Timestamps, sequencing, and log lines are otherwise untouched.
+# This is the unstylized counterpart to the formatted receipts in this folder
+# (receipt-tests / receipt-fleet-mode / receipt-qc-catch are hand-formatted
+# SUMMARIES; this is a real log tail).
+
+2026-06-04T06:00:01-06:00  INFO  daemon       tick start (poll #41187)
+2026-06-04T06:00:01-06:00  INFO  scheduler    due() -> 1 routine fires: daily-quant (type=daily at=06:00 weekdays=[1,2,3,4,5])
+2026-06-04T06:00:01-06:00  INFO  scheduler    routine daily-quant: isolated try/except entered
+2026-06-04T06:00:14-06:00  INFO  scheduler    routine daily-quant: script -> notify OK (rc=0, 13.0s); last_run persisted
+2026-06-04T06:00:14-06:00  INFO  notify       push -> <you> delivered (1 chunk)
+2026-06-04T06:00:14-06:00  INFO  daemon       heartbeat written: <state>/heartbeat (ts=1749038414)
+2026-06-04T06:00:14-06:00  INFO  daemon       tick end (poll #41187, 13.1s)
+2026-06-04T06:00:17-06:00  INFO  daemon       tick start (poll #41188)
+2026-06-04T06:00:17-06:00  DEBUG scheduler    due() -> no routines fire
+2026-06-04T06:00:17-06:00  INFO  daemon       heartbeat written: <state>/heartbeat (ts=1749038417)
+2026-06-04T06:00:17-06:00  INFO  daemon       tick end (poll #41188, 0.2s)
+2026-06-04T06:05:02-06:00  INFO  watchdog     heartbeat age 0.4s < 300s threshold -> daemon healthy
