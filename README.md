@@ -1,8 +1,15 @@
 # Bow
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![tests](https://img.shields.io/badge/tests-101%20passing-brightgreen.svg)](assets/receipt-tests.png)
+[![built with](https://img.shields.io/badge/built%20with-Claude%20Opus%204.8-blueviolet.svg)](docs/FLEET-MODE.md)
+
 **An all-Claude (Opus 4.8) chief-of-staff agent I architected, built, and run — reachable from my phone, at ≈ $0/mo marginal cost.**
 
 `16 modules` · `1,025 LOC code + 1,339 LOC tests` · `101 tests` · `6 milestones shipped` · `~$0/mo`
+
+> ⭐ **Fleet Mode** — my original agent-orchestration doctrine, running as a live skill (see [docs/FLEET-MODE.md](docs/FLEET-MODE.md)).
 
 > A single always-on daemon wraps the headless `claude -p` CLI as first-party usage, routes my phone messages, runs autonomous builds, fires scheduled routines, and self-heals — built and adversarially reviewed by fleets of Claude subagents I directed and gated.
 
@@ -89,6 +96,10 @@ The four sub-rules, in short:
 
 There's an honest provenance beat in the full doc: after I had Fleet Mode running as my default, the labs shipped essentially the same idea ("ultracode"). I'm not claiming I invented something they copied — I'm claiming I arrived at it independently, from the same pressure, before it had a product name. When you operate agent fleets seriously and adversarially, you converge on the rules the work actually rewards.
 
+![Fleet Mode receipt — the doctrine running as a live skill](assets/receipt-fleet-mode.png)
+
+*A hand-formatted summary of Fleet Mode firing on a real build — the doctrine is operational, not an essay.*
+
 Full treatment: **[docs/FLEET-MODE.md](docs/FLEET-MODE.md)**.
 
 ---
@@ -125,6 +136,10 @@ Each guard exists because the adversarial QC pass found the failure it prevents 
 ## 6. Engineering process
 
 Spec → plan → subagent-driven build → **independent adversarial QC** → security review → 101 tests → reversible production cutover. Every milestone passed a deterministic check (tests, a live invocation) *and* a separate refute-first review before I let myself write "shipped."
+
+![The AI-native SDLC — I direct and gate every step under Fleet Mode](assets/process.png)
+
+*The process as a diagram: read-heavy work fans out, writes stay single-threaded, and every gate emits a receipt — I gate the irreversible steps myself.*
 
 ![pytest: 101 passed](assets/receipt-tests.png)
 
