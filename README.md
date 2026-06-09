@@ -9,6 +9,8 @@
 
 `16 modules` · `1,025 LOC code + 1,339 LOC tests` · `101 tests` · `6 milestones shipped` · `~$0/mo`
 
+*Those are the launch figures, matching the raw artifacts in `assets/`. The live private system has since grown to `22 modules` · `302 tests` (June 2026).*
+
 > ⭐ **Fleet Mode** — my original agent-orchestration doctrine, running as a live skill (see [docs/FLEET-MODE.md](docs/FLEET-MODE.md)).
 
 > A single always-on daemon wraps the headless `claude -p` CLI as first-party usage, routes my phone messages, runs autonomous builds, fires scheduled routines, and self-heals — built and adversarially reviewed by fleets of Claude subagents I directed and gated.
@@ -207,3 +209,14 @@ The build-vs-buy reasoning is the whole architecture in one line: a do-everythin
 **Full private repo and the test suite available on request.**
 
 I architected this system, made the central bet (*be the tool, don't call the API*), and then directed and gated fleets of Claude (Opus 4.8) subagents to implement and adversarially review it — under the Fleet Mode doctrine, which runs as a live skill so the orchestration is operational, not an essay. The gates caught real bugs every single time; the soft-lock catch in section 5 is the proof that the orchestration-under-gates earns its keep.
+
+---
+
+## Companion repos
+
+Bow is the flagship of a small public line that shares the same doctrine — orchestrate, gate, measure, keep the receipts:
+
+- **[fleet-mode](https://github.com/Jott2121/fleet-mode)** — the §3 orchestration doctrine, packaged as an installable Claude Code skill.
+- **[agent-gate](https://github.com/Jott2121/agent-gate)** — the gate as a tool: an MCP server exposing a fail-closed checklist and a sha256 hash-chained receipts ledger.
+- **[rag-guard](https://github.com/Jott2121/rag-guard)** — guarded RAG: grounded answers, refuse-when-unsupported, PII redaction, and an eval harness.
+- **[agent-cost-attribution](https://github.com/Jott2121/agent-cost-attribution)** — the meter + playbook for getting the most capability per token out of agentic coding. Measured, not asserted.
