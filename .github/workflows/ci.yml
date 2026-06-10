@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile-check Python snippets
+        run: |
+          find snippets -name "*.py" -print0 | xargs -0 -n1 python3 -m py_compile
+          echo "All snippets compile."
+
+      - name: Style gate (no em-dashes in README or case study)
+        run: |
+          if grep -n "—" README.md docs/CASE-STUDY.md; then
+            echo "Em-dash found. House style says no."
+            exit 1
+          fi
+          echo "Clean."
+
+      - name: Lint markdown (advisory)
+        continue-on-error: true
+        run: npx --yes markdownlint-cli README.md "docs/*.md" --disable MD013 MD033 MD041 MD012 MD036
