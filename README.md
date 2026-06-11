@@ -20,6 +20,8 @@ This repo is a sanitized engineering case study, not a runnable clone. The proof
 
 **The one thing to take away:** this is an AI-built system where my value-add is the *orchestration doctrine and the gates*, not the typing. I architected it, then directed and gated fleets of Claude (Opus 4.8) subagents to implement and adversarially review every piece. The gates earned their keep with real bugs caught, not assertions. The sharpest single instance: an independent QC pass caught a malformed-routine field that could **soft-lock the entire daemon** (routine dispatch ran before the message poll, so one bad routine raising an exception froze the phone channel too), a failure the happy-path unit tests never saw. Directing agent fleets to ship *correct* work, with the gates proving it, is the competency on display. The cost bet below is the architecture decision that makes it cheap; the orchestration is the skill.
 
+![Bow model routing demo — cheapest sufficient model per message](assets/demo.gif)
+
 ---
 
 ## 1. What it is (30 seconds)
