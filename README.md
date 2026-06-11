@@ -3,12 +3,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/Jott2121/bow/actions/workflows/ci.yml/badge.svg)](https://github.com/Jott2121/bow/actions/workflows/ci.yml)
-[![private test suite](https://img.shields.io/badge/private%20test%20suite-302%20tests%20(June%202026)-informational.svg)](docs/CASE-STUDY.md)
+[![private test suite](https://img.shields.io/badge/private%20test%20suite-382%20tests%20(June%202026)-informational.svg)](docs/CASE-STUDY.md)
 [![built with](https://img.shields.io/badge/built%20with-Claude%20Opus%204.8-blueviolet.svg)](docs/FLEET-MODE.md)
 
 **An all-Claude (Opus 4.8) chief-of-staff agent I architected, built, and run. Reachable from my phone, at about $0/mo marginal cost.**
 
-`22 modules` · `302 tests` · `6 milestones shipped` · `~$0/mo`
+`24 modules` · `382 tests` · `6 milestones shipped` · `~$0/mo`
 
 *Those are the live private system's numbers as of June 2026. The raw artifacts in `assets/` are the launch snapshot (16 modules, 101 tests) and match those receipts exactly. The CI badge above covers this public repo only; the 302-test suite runs in the private repo.*
 
@@ -148,7 +148,7 @@ Spec → plan → subagent-driven build → **independent adversarial QC** → s
 
 ![pytest: 101 passed](assets/receipt-tests.png)
 
-*The deterministic gate at launch: the full suite green (101 tests at launch; the private live system is at 302 as of June 2026). Raw `pytest` output, not a summary.*
+*The deterministic gate at launch: the full suite green (101 tests at launch; the private live system is at 382 as of June 2026). Raw `pytest` output, not a summary.*
 
 Most of this landed inside one focused session, which is mechanically unremarkable once you see how: fleets of Claude subagents did the implementation in parallel, under my direction and my gates. I wasn't typing 1,025 lines by hand; I was classifying stakes, fanning out read-heavy work, keeping writes single-threaded, and refusing to let any milestone past a deterministic check and an independent refute-first review. The compression came from the orchestration plus the discipline of the gates, and where I cut a corner, the review caught it and I logged it.
 
