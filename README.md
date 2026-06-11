@@ -14,7 +14,7 @@
 
 > ⭐ **Fleet Mode**: my original agent-orchestration doctrine, running as a live skill (see [docs/FLEET-MODE.md](docs/FLEET-MODE.md)).
 
-> 🧩 **Bow is the flagship of one system, not one of five projects** — five public repos form a single [cost-governance stack](#the-system-a-cost-governance-stack) for operating AI agents cost-efficiently, with receipts.
+> 🧩 **Bow is the flagship of one system, not one of five projects**: five public repos form a single [cost-governance stack](#the-system-a-cost-governance-stack) for operating AI agents cost-efficiently, with receipts.
 
 > A single always-on daemon wraps the headless `claude -p` CLI as first-party usage, routes my phone messages, runs autonomous builds, fires scheduled routines, and self-heals. Built and adversarially reviewed by fleets of Claude subagents I directed and gated.
 
@@ -196,22 +196,22 @@ The longer material (what this demonstrates, the cost math behind the ~$0/mo cla
 
 ## The system: a cost-governance stack
 
-These five public repos are not five projects. They are one system for operating AI agents cost-efficiently, with receipts — each layer answers one question about a unit of agent work, in order:
+These five public repos are not five projects. They are one system for operating AI agents cost-efficiently, with receipts. Each layer answers one question about a unit of agent work, in order:
 
 ```mermaid
 flowchart TD
-    FM["fleet-mode — should agents run at all?<br/><i>bias-to-NO on fan-out: adding agents measured a negative mean payoff on most tasks</i>"]
-    RT["model routing (Bow) — which model takes the call?<br/><i>cheapest sufficient tier: extraction → cheap, everyday → mid, builds + judging → premium</i>"]
-    RG["rag-guard — should the model be called at all?<br/><i>when retrieval can't support the question, it refuses — the model is never even called</i>"]
-    AG["agent-gate — did the work actually pass?<br/><i>fail-closed checklist + hash-chained receipts: no expensive silent failures, no costly reruns</i>"]
-    CA["agent-cost-attribution — what did it cost, stage by stage?<br/><i>the meter: a 67% run-cost cut (~$0.60 → ~$0.20) with quality gated, not assumed</i>"]
+    FM["fleet-mode: should agents run at all?<br/><i>bias-to-NO on fan-out: adding agents measured a negative mean payoff on most tasks</i>"]
+    RT["model routing (Bow): which model takes the call?<br/><i>cheapest sufficient tier: extraction → cheap, everyday → mid, builds + judging → premium</i>"]
+    RG["rag-guard: should the model be called at all?<br/><i>when retrieval can't support the question, it refuses; the model is never even called</i>"]
+    AG["agent-gate: did the work actually pass?<br/><i>fail-closed checklist + hash-chained receipts: no expensive silent failures, no costly reruns</i>"]
+    CA["agent-cost-attribution: what did it cost, stage by stage?<br/><i>the meter: a 67% run-cost cut (~$0.60 → ~$0.20) with quality gated, not assumed</i>"]
     FM --> RT --> RG --> AG --> CA
     CA -. "measurements re-tune the doctrine" .-> FM
 ```
 
-The loop is the point: the meter's findings feed back into the doctrine (its own spec predicted Fetch would be the cost whale; the measurement said Verify — the instrument overturned the belief). Worked end-to-end, the stack is what makes the numbers above possible: a dispatched build that wrote code, ran it, and logged its own Fleet Mode receipt cost **$0.33** (receipt in the private build log; available on request, like the test suite), and Bow's whole operation rides at **~$0/month marginal** over a flat-rate plan.
+The loop is the point: the meter's findings feed back into the doctrine (its own spec predicted Fetch would be the cost whale; the measurement said Verify; the instrument overturned the belief). Worked end-to-end, the stack is what makes the numbers above possible: a dispatched build that wrote code, ran it, and logged its own Fleet Mode receipt cost **$0.33** (receipt in the private build log; available on request, like the test suite), and Bow's whole operation rides at **~$0/month marginal** over a flat-rate plan.
 
-- **[fleet-mode](https://github.com/Jott2121/fleet-mode)**: the §3 orchestration doctrine, packaged as an installable Claude Code skill. The bias-to-NO stance is measured: mean multi-agent gain of **−3.5%** on an internal task set (small n — the sign, not the magnitude, is the takeaway; see its [EVIDENCE.md](https://github.com/Jott2121/fleet-mode/blob/main/docs/EVIDENCE.md)).
+- **[fleet-mode](https://github.com/Jott2121/fleet-mode)**: the §3 orchestration doctrine, packaged as an installable Claude Code skill. The bias-to-NO stance is measured: mean multi-agent gain of **−3.5%** on an internal task set (small n; the sign, not the magnitude, is the takeaway; see its [EVIDENCE.md](https://github.com/Jott2121/fleet-mode/blob/main/docs/EVIDENCE.md)).
 - **[agent-gate](https://github.com/Jott2121/agent-gate)**: the gate as a tool, an MCP server exposing a fail-closed checklist and a sha256 hash-chained receipts ledger.
 - **[rag-guard](https://github.com/Jott2121/rag-guard)**: guarded RAG with grounded answers, refuse-when-unsupported, PII redaction, and an eval harness.
 - **[agent-cost-attribution](https://github.com/Jott2121/agent-cost-attribution)**: the meter + playbook for getting the most capability per token out of agentic coding. Measured, not asserted.
