@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/Jott2121/bow/actions/workflows/ci.yml/badge.svg)](https://github.com/Jott2121/bow/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Jott2121/bow/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jott2121/bow/actions/workflows/codeql.yml)
 [![private test suite](https://img.shields.io/badge/private%20test%20suite-382%20tests%20(June%202026)-informational.svg)](docs/CASE-STUDY.md)
 [![built with](https://img.shields.io/badge/built%20with-Claude%20Opus%204.8-blueviolet.svg)](docs/FLEET-MODE.md)
 
