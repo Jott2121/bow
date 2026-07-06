@@ -55,6 +55,19 @@ The cost bet below is the architecture decision that makes it cheap; the orchest
 
 ---
 
+## How to read this repo
+
+Two layers, depending on why you are here.
+
+- **Here for the loot (reusable code):** the three patterns in [`patterns/`](patterns/) are runnable, stdlib-only, and shipped with their production tests. Clone and run `python3 -m pytest patterns/ -q`. Start with the table at the top.
+- **Here to evaluate the engineering:** read sections 1 through 8 below. They are the case study of the live system these patterns came out of. The short version is [`docs/CASE-STUDY.md`](docs/CASE-STUDY.md).
+- **Here for the orchestration doctrine:** section 3 and [`docs/FLEET-MODE.md`](docs/FLEET-MODE.md). That is the actual skill on display, directing and gating agent fleets, not the typing.
+- **Here for proof:** [`assets/`](assets/) holds the real receipts (test runs, daemon logs, the QC catch), and section 7 is the honest scorecard, including what does not work.
+
+What this repo is not: a runnable clone of the private system. It is a sanitized case study. The architecture, the doctrine, the annotated patterns, and the receipts are the point.
+
+---
+
 ## 1. What it is (30 seconds)
 
 I ran an earlier multi-provider personal agent. It died on auth, `HTTP 400: "You're out of extra usage"`, because a flat-rate subscription credential can't legally serve a *third-party* agent's API traffic; that traffic gets metered, and when the balance hits zero, the agent stops. The only honest fix inside that design is a real metered API key, and for a do-everything assistant that runs all day, that is real money every month.
