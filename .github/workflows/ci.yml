@@ -23,9 +23,15 @@ jobs:
           find snippets -name "*.py" -print0 | xargs -0 -n1 python3 -m py_compile
           echo "All snippets compile."
 
+      - name: Pattern tests (hermetic, stdlib-only)
+        run: |
+          python3 -m pip install pytest -q
+          python3 -m pytest patterns/ -q
+          echo "patterns green"
+
       - name: Style gate (no em-dashes in README or case study)
         run: |
-          if grep -n "—" README.md docs/CASE-STUDY.md; then
+          if grep -n "—" README.md docs/CASE-STUDY.md docs/RELIABILITY-WEEK.md patterns/*/README.md patterns/README.md; then
             echo "Em-dash found. House style says no."
             exit 1
           fi

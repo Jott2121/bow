@@ -1,11 +1,37 @@
-# Bow
+# Bow: guardrail patterns for headless Claude Code agents, and the system they run in
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/Jott2121/bow/actions/workflows/ci.yml/badge.svg)](https://github.com/Jott2121/bow/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/Jott2121/bow/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jott2121/bow/actions/workflows/codeql.yml)
-[![private test suite](https://img.shields.io/badge/private%20test%20suite-382%20tests%20(June%202026)-informational.svg)](docs/CASE-STUDY.md)
+[![private test suite](https://img.shields.io/badge/tests-32%20public%20%2B%20382%20private-informational.svg)](docs/CASE-STUDY.md)
 [![built with](https://img.shields.io/badge/built%20with-Claude%20Opus%204.8-blueviolet.svg)](docs/FLEET-MODE.md)
+
+I direct fleets of Claude agents to build production systems, then gate their work with adversarial review. These three patterns came out of one of those systems.
+
+**Three guardrail patterns for headless Claude Code agents that must not die at the usage wall. Runnable, stdlib-only, shipped with the production tests. Steal them.**
+
+| Pattern | The failure it prevents | Receipt |
+|---|---|---|
+| [Budget governor](patterns/budget_governor/) | your agent dies mid-task when the shared usage cap runs dry | defers with a note, catches up automatically; the full wall lifecycle proven live on the real ledger |
+| [Proactive compactor](patterns/proactive_compactor/) | session rotation loses your agent's memory, or stalls a reply for minutes | $0.23 per background brief; instant rotations |
+| [Escalation valve](patterns/escalation_valve/) | your cheap model grinds on a hard call it should hand up | one consult per hard call; autopilot triggers live-verified, every consult receipted in an append-only ledger |
+
+```bash
+git clone https://github.com/Jott2121/bow && cd bow
+python3 -m pytest patterns/ -q   # 32 tests, under 2 seconds, zero live calls
+```
+
+```
+$ python3 -m pytest patterns/ -q
+32 passed in 0.02s
+```
+
+One of these patterns exists because a three-call experiment disproved the design I was about to build: [resume does not fork](patterns/proactive_compactor/RESUME-DOES-NOT-FORK.md).
+
+Below the fold: the case study of the system they run in, the orchestration doctrine that built it, and the gates that caught the bugs my tests missed. That part is the resume. This part is the loot.
+
+---
 
 **An all-Claude (Opus 4.8) chief-of-staff agent I architected, built, and run. Reachable from my phone, at about $0/mo marginal cost.**
 
@@ -21,7 +47,9 @@
 
 This repo is a sanitized engineering case study, not a runnable clone. The proof is the architecture, an original orchestration doctrine, real annotated code, the build process, and honest receipts. Tone throughout: receipts over hype.
 
-**The one thing to take away:** this is an AI-built system where my value-add is the *orchestration doctrine and the gates*, not the typing. I architected it, then directed and gated fleets of Claude (Opus 4.8) subagents to implement and adversarially review every piece. The gates earned their keep with real bugs caught, not assertions. The sharpest single instance: an independent QC pass caught a malformed-routine field that could **soft-lock the entire daemon** (routine dispatch ran before the message poll, so one bad routine raising an exception froze the phone channel too), a failure the happy-path unit tests never saw. Directing agent fleets to ship *correct* work, with the gates proving it, is the competency on display. The cost bet below is the architecture decision that makes it cheap; the orchestration is the skill.
+**The one thing to take away:** this is an AI-built system where my value-add is the *orchestration doctrine and the gates*, not the typing. I architected it, then directed and gated fleets of Claude (Opus 4.8) subagents to implement and adversarially review every piece. The gates earned their keep with real bugs caught, not assertions. The sharpest single instance: an independent QC pass caught a malformed-routine field that could **soft-lock the entire daemon**, a failure the happy-path unit tests never saw. Directing agent fleets to ship *correct* work, with the gates proving it, is the competency on display.
+
+The cost bet below is the architecture decision that makes it cheap; the orchestration is the skill.
 
 ![Bow model routing demo: cheapest sufficient model per message](assets/demo.gif)
 
@@ -138,6 +166,8 @@ Each guard exists because the adversarial QC pass found the failure it prevents,
 - **Routine isolation.** Routine dispatch ran *before* the message fetch each tick, so one malformed routine raising an exception soft-locked the *entire* daemon, every tick, freezing the phone channel too. Now each routine is isolated in its own try/except and `due()` reads its fields defensively. → [`snippets/daemon_resilience.py`](snippets/daemon_resilience.py)
 - **No live vulnerabilities** for the single-user threat model after the review and fixes. Zero critical findings remaining.
 - **`bypassPermissions` is a documented, gated, accepted risk.** Queued builds run with permissions bypassed (the security review rated this HIGH). I did *not* silently ship it: the chat allowlist is the load-bearing gate, a sandbox is a deferred item, and the trade-off is written down. An honest "accepted risk, here's the mitigation" beats a hidden one.
+
+**The July hardening arc.** A follow-on week after the launch build, same discipline applied to the system itself: a blind pre/post bench on a skill-mining pass that landed exactly at its own pre-committed threshold (flat by the letter of the rule, kept anyway on an honest direction-and-floor argument), an escalation valve for hard calls that uses an append-only receipts ledger instead of a hard cap, a budget governor that parses its own cooldown out of the provider's rate-limit error text, and a proactive compactor whose first design got killed by a three-call experiment before the wrong version got built. Plus three bugs that a clean review and a green test suite both missed and only live verification caught. Full writeup: **[docs/RELIABILITY-WEEK.md](docs/RELIABILITY-WEEK.md)**.
 
 ---
 
