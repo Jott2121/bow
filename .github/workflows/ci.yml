@@ -25,8 +25,8 @@ jobs:
 
       - name: Pattern tests (hermetic, stdlib-only)
         run: |
-          python3 -m pip install pytest -q
-          python3 -m pytest patterns/ -q
+          python3 -m pip install pytest pytest-cov -q
+          python3 -m pytest patterns/ -q --cov=patterns --cov-report=term-missing --cov-fail-under=85
           echo "patterns green"
 
       - name: Style gate (no em-dashes in README or case study)
